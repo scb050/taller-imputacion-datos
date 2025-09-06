@@ -1,0 +1,20 @@
+﻿format: jb-book
+root: intro
+
+chapters:
+  - file: secciones/exploracion
+    title: "Exploración de datos"
+  - file: secciones/nulos
+    title: "Análisis de valores nulos"
+  - file: secciones/clasificacion
+    title: "Clasificación de mecanismos de ausencia"
+  - file: secciones/tecnicas
+    title: "Técnicas de imputación"
+  - file: secciones/comparacion
+    title: "Comparación antes vs después"
+  - file: secciones/evaluacion
+    title: "Evaluación estadística"
+  - file: secciones/conclusion
+    title: "Conclusiones finales"
+
+

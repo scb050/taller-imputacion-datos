@@ -1,0 +1,8 @@
+﻿title: "Taller de Imputación de Datos"
+author: "Sergio Cadavid"
+language: es
+
+execute:
+  execute_notebooks: "off"   # ("auto" también vale)
+
+ 
