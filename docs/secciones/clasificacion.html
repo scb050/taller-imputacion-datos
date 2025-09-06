@@ -1,0 +1,838 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Clasificación de mecanismos de ausencia &#8212; Taller de Imputación de Datos</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'secciones/clasificacion';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Técnicas de imputación" href="tecnicas.html" />
+    <link rel="prev" title="Análisis de valores nulos" href="nulos.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Taller de Imputación de Datos</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Taller de Imputación de Datos
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="exploracion.html">Exploración de datos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nulos.html">Análisis de valores nulos</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Clasificación de mecanismos de ausencia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tecnicas.html">Técnicas de imputación</a></li>
+<li class="toctree-l1"><a class="reference internal" href="comparacion.html">Comparación antes vs después</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluacion.html">Evaluación estadística</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="conclusion.html">Principales hallazgos</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/secciones/clasificacion.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Clasificación de mecanismos de ausencia</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descripcion-del-dataset">Descripción del dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observaciones-iniciales">Observaciones iniciales</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comentario-del-dataset">Comentario del dataset</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="clasificacion-de-mecanismos-de-ausencia">
+<h1>Clasificación de mecanismos de ausencia<a class="headerlink" href="#clasificacion-de-mecanismos-de-ausencia" title="Link to this heading">#</a></h1>
+<p>En este capítulo se estudia el tipo de mecanismo que origina los valores faltantes en la base de datos.<br />
+Existen diferentes categorías (MCAR, MAR, MNAR) que describen cómo y por qué ocurren las ausencias.</p>
+<p><strong>Puntos clave:</strong></p>
+<ul class="simple">
+<li><p>Revisar patrones de ausencia en relación con otras variables.</p></li>
+<li><p>Analizar correlaciones para detectar dependencia entre los faltantes y las variables observadas.</p></li>
+<li><p>Determinar si los datos faltan al azar o bajo un mecanismo no aleatorio.</p></li>
+</ul>
+<p>Esta clasificación orienta la elección de la técnica de imputación más apropiada y asegura que los resultados posteriores sean válidos.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="c1"># Subir un nivel desde la carpeta &quot;secciones&quot;</span>
+<span class="n">csv_path</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;base_imputacion_mixta_1000.csv&quot;</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_path</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dimensiones:&quot;</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dimensiones: (1000, 12)
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fecha</th>
+      <th>sexo</th>
+      <th>ciudad</th>
+      <th>nivel_educativo</th>
+      <th>segmento</th>
+      <th>estado_civil</th>
+      <th>edad</th>
+      <th>altura_cm</th>
+      <th>ingresos</th>
+      <th>gasto_mensual</th>
+      <th>puntuacion_credito</th>
+      <th>demanda</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2024-01-01</td>
+      <td>F</td>
+      <td>Medellín</td>
+      <td>NaN</td>
+      <td>B</td>
+      <td>Unión libre</td>
+      <td>19.0</td>
+      <td>161.821754</td>
+      <td>3574.753806</td>
+      <td>1832.731832</td>
+      <td>640.465372</td>
+      <td>119.202995</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2024-01-02</td>
+      <td>F</td>
+      <td>Barranquilla</td>
+      <td>NaN</td>
+      <td>B</td>
+      <td>NaN</td>
+      <td>52.0</td>
+      <td>167.819566</td>
+      <td>3163.626815</td>
+      <td>NaN</td>
+      <td>533.108430</td>
+      <td>124.457874</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2024-01-03</td>
+      <td>M</td>
+      <td>Bogotá</td>
+      <td>Secundaria</td>
+      <td>B</td>
+      <td>Soltero/a</td>
+      <td>38.0</td>
+      <td>165.756219</td>
+      <td>2765.672259</td>
+      <td>1219.535074</td>
+      <td>491.016910</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2024-01-04</td>
+      <td>F</td>
+      <td>Bogotá</td>
+      <td>NaN</td>
+      <td>B</td>
+      <td>Casado/a</td>
+      <td>57.0</td>
+      <td>160.642670</td>
+      <td>4320.397345</td>
+      <td>1908.324816</td>
+      <td>NaN</td>
+      <td>129.426792</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2024-01-05</td>
+      <td>M</td>
+      <td>Cali</td>
+      <td>Técnico</td>
+      <td>B</td>
+      <td>Soltero/a</td>
+      <td>67.0</td>
+      <td>151.402909</td>
+      <td>NaN</td>
+      <td>1887.385697</td>
+      <td>610.213994</td>
+      <td>133.916319</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="descripcion-del-dataset">
+<h2>Descripción del dataset<a class="headerlink" href="#descripcion-del-dataset" title="Link to this heading">#</a></h2>
+<p>El dataset contiene <strong>1000 filas y 12 columnas</strong>, con información de tipo socio-demográfico, económico y de consumo.<br />
+Las variables principales son:</p>
+<ul class="simple">
+<li><p><strong>fecha</strong>: Día de registro (formato <code class="docutils literal notranslate"><span class="pre">YYYY-MM-DD</span></code>).</p></li>
+<li><p><strong>sexo</strong>: Género del individuo (F/M).</p></li>
+<li><p><strong>ciudad</strong>: Ciudad de residencia (ej. Medellín, Barranquilla, Bogotá, Cali).</p></li>
+<li><p><strong>nivel_educativo</strong>: Nivel educativo alcanzado (Secundaria, Técnico, etc.). Contiene valores faltantes.</p></li>
+<li><p><strong>segmento</strong>: Segmento de clasificación (ejemplo: “B”).</p></li>
+<li><p><strong>estado_civil</strong>: Estado civil del individuo (Unión libre, Soltero/a, Casado/a). Contiene valores faltantes.</p></li>
+<li><p><strong>edad</strong>: Edad en años.</p></li>
+<li><p><strong>altura_cm</strong>: Altura en centímetros.</p></li>
+<li><p><strong>ingresos</strong>: Ingresos mensuales (algunas filas con valores faltantes).</p></li>
+<li><p><strong>gasto_mensual</strong>: Gasto mensual reportado (con algunos valores faltantes).</p></li>
+<li><p><strong>puntuacion_credito</strong>: Puntuación crediticia (con valores nulos).</p></li>
+<li><p><strong>demanda</strong>: Valor numérico asociado a la demanda estimada de un producto/servicio.</p></li>
+</ul>
+<section id="observaciones-iniciales">
+<h3>Observaciones iniciales<a class="headerlink" href="#observaciones-iniciales" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Hay <strong>valores faltantes</strong> en varias columnas: <code class="docutils literal notranslate"><span class="pre">nivel_educativo</span></code>, <code class="docutils literal notranslate"><span class="pre">estado_civil</span></code>, <code class="docutils literal notranslate"><span class="pre">ingresos</span></code>, <code class="docutils literal notranslate"><span class="pre">gasto_mensual</span></code>, <code class="docutils literal notranslate"><span class="pre">puntuacion_credito</span></code> y <code class="docutils literal notranslate"><span class="pre">demanda</span></code>.</p></li>
+<li><p>Las variables combinan <strong>datos categóricos</strong> (sexo, ciudad, nivel educativo, estado civil, segmento) y <strong>datos numéricos</strong> (edad, altura, ingresos, gasto, puntuación de crédito, demanda).</p></li>
+<li><p>El dataset parece adecuado para análisis de segmentación, predicción de demanda o análisis de comportamiento de consumo.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">pointbiserialr</span><span class="p">,</span> <span class="n">ttest_ind</span>
+
+<span class="n">resumen</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">num_cols_all</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">])</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="c1"># máscara binaria de faltantes de la variable &#39;col&#39;</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="c1"># si la máscara no tiene variación (todo 0 o todo 1), no hay nada que asociar</span>
+    <span class="k">if</span> <span class="n">mask</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">resumen</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="n">col</span><span class="p">,</span>
+            <span class="s2">&quot;max_corr_mask_vs_numeric&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+            <span class="s2">&quot;pval_diff_mean_example&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+            <span class="s2">&quot;nota&quot;</span><span class="p">:</span> <span class="s2">&quot;sin variación en la máscara&quot;</span>
+        <span class="p">})</span>
+        <span class="k">continue</span>
+
+    <span class="c1"># columnas numéricas candidatas (excluye &#39;col&#39; si también es numérica)</span>
+    <span class="n">num_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">num_cols_all</span> <span class="k">if</span> <span class="n">c</span> <span class="o">!=</span> <span class="n">col</span><span class="p">]</span>
+
+    <span class="n">max_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>  <span class="c1"># |correlación| máxima entre máscara y numéricas</span>
+    <span class="k">for</span> <span class="n">nc</span> <span class="ow">in</span> <span class="n">num_cols</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">nc</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">mask</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+
+        <span class="c1"># descarta filas con NaN en x</span>
+        <span class="n">valid</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">valid</span><span class="p">]</span>
+        <span class="n">m2</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="n">valid</span><span class="p">]</span>
+
+        <span class="c1"># si no hay variación o no hay datos suficientes, saltar</span>
+        <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span> <span class="o">&lt;</span> <span class="mi">8</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">nanstd</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">m2</span><span class="p">)</span><span class="o">.</span><span class="n">size</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># correlación punto-biserial (binaria vs numérica)</span>
+        <span class="n">r</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">pointbiserialr</span><span class="p">(</span><span class="n">m2</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+            <span class="n">max_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">([</span><span class="n">max_r</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">r</span><span class="p">)])</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">max_r</span><span class="p">)</span> <span class="k">else</span> <span class="nb">abs</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+
+    <span class="c1"># t-test simple como señal adicional (elige una numérica representativa)</span>
+    <span class="n">pval</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="k">if</span> <span class="n">num_cols</span><span class="p">:</span>
+        <span class="n">nc</span> <span class="o">=</span> <span class="n">num_cols</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">g1</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="n">nc</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+        <span class="n">g0</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">nc</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">g1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">g0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span> <span class="ow">and</span> <span class="n">g1</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">ddof</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">g0</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">ddof</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">pval</span> <span class="o">=</span> <span class="n">ttest_ind</span><span class="p">(</span><span class="n">g1</span><span class="p">,</span> <span class="n">g0</span><span class="p">,</span> <span class="n">equal_var</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">nan_policy</span><span class="o">=</span><span class="s2">&quot;omit&quot;</span><span class="p">)</span>
+
+    <span class="n">resumen</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="n">col</span><span class="p">,</span>
+        <span class="s2">&quot;max_corr_mask_vs_numeric&quot;</span><span class="p">:</span> <span class="n">max_r</span><span class="p">,</span>
+        <span class="s2">&quot;pval_diff_mean_example&quot;</span><span class="p">:</span> <span class="n">pval</span><span class="p">,</span>
+        <span class="s2">&quot;nota&quot;</span><span class="p">:</span> <span class="kc">None</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">max_r</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;sin numéricas válidas&quot;</span>
+    <span class="p">})</span>
+
+<span class="n">clasif</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">resumen</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;max_corr_mask_vs_numeric&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">clasif</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>variable</th>
+      <th>max_corr_mask_vs_numeric</th>
+      <th>pval_diff_mean_example</th>
+      <th>nota</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>9</th>
+      <td>gasto_mensual</td>
+      <td>0.177659</td>
+      <td>0.002410</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ciudad</td>
+      <td>0.111821</td>
+      <td>0.106080</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>ingresos</td>
+      <td>0.108755</td>
+      <td>0.109780</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>demanda</td>
+      <td>0.087479</td>
+      <td>0.131425</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>nivel_educativo</td>
+      <td>0.077216</td>
+      <td>0.586320</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>altura_cm</td>
+      <td>0.072031</td>
+      <td>0.289901</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>segmento</td>
+      <td>0.061822</td>
+      <td>0.060034</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>sexo</td>
+      <td>0.057228</td>
+      <td>0.189338</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>estado_civil</td>
+      <td>0.050197</td>
+      <td>0.458526</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>puntuacion_credito</td>
+      <td>0.030588</td>
+      <td>0.841998</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>edad</td>
+      <td>0.028326</td>
+      <td>0.353227</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>fecha</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>sin variación en la máscara</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="comentario-del-dataset">
+<h2>Comentario del dataset<a class="headerlink" href="#comentario-del-dataset" title="Link to this heading">#</a></h2>
+<p>El dataset contiene <strong>1000 registros y 12 variables</strong>. Incluye datos <strong>categóricos</strong> (sexo, ciudad, nivel_educativo, segmento, estado_civil) y <strong>numéricos</strong> (edad, altura_cm, ingresos, gasto_mensual, puntuacion_credito, demanda).</p>
+<ul class="simple">
+<li><p><strong>fecha</strong>: registro diario (<code class="docutils literal notranslate"><span class="pre">YYYY-MM-DD</span></code>).</p></li>
+<li><p><strong>sexo / ciudad / nivel_educativo / estado_civil / segmento</strong>: información demográfica y de clasificación, con valores faltantes en educación y estado civil.</p></li>
+<li><p><strong>edad / altura_cm</strong>: características físicas básicas.</p></li>
+<li><p><strong>ingresos / gasto_mensual / puntuacion_credito / demanda</strong>: variables económicas y de comportamiento, varias con valores nulos.</p></li>
+</ul>
+<p><strong>Observación:</strong> existen datos faltantes en variables clave, lo que requiere imputación o tratamiento previo. La mezcla de información demográfica, económica y de consumo lo hace adecuado para <strong>segmentación de clientes</strong> y <strong>modelos predictivos de demanda</strong>.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./secciones"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="nulos.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Análisis de valores nulos</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="tecnicas.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Técnicas de imputación</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descripcion-del-dataset">Descripción del dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observaciones-iniciales">Observaciones iniciales</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comentario-del-dataset">Comentario del dataset</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Sergio Cadavid
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
