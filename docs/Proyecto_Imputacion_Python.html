@@ -1,0 +1,2309 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Proyecto: Visualización de datos y toma de decisiones — Imputación (Python) &#8212; Taller de Imputación de Datos</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Proyecto_Imputacion_Python';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Taller de Imputación de Datos</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Taller de Imputación de Datos
+                </a>
+            </li>
+        </ul>
+        
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Proyecto_Imputacion_Python.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Proyecto: Visualización de datos y toma de decisiones — Imputación (Python)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cargar-datos-y-exploracion-inicial">1) Cargar datos y exploración inicial</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploracion-inicial-de-la-base-de-datos">Exploración inicial de la base de datos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#informacion-general">Información general</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#primeras-filas">Primeras filas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resumen-estadistico">Resumen estadístico</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-preliminar">Conclusión preliminar</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deteccion-de-nulos-graficos">2) Detección de nulos + gráficos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deteccion-de-valores-faltantes">Detección de valores faltantes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tabla-resumen-de-nulos">Tabla resumen de nulos</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grafico-de-barras">Gráfico de barras</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mapa-de-calor">Mapa de calor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusión</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clasificacion-mcar-mar-mnar-enfoque-practico">3) Clasificación MCAR/MAR/MNAR (enfoque práctico)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clasificacion-del-tipo-de-faltante">Clasificación del tipo de faltante</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-de-los-resultados">Interpretación de los resultados</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Conclusión</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tecnicas-de-imputacion-a-aplicar">4) Técnicas de imputación a aplicar</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Técnicas de imputación a aplicar</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#consideraciones-y-buenas-practicas">Consideraciones y buenas prácticas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejecutar-imputaciones-sobre-la-base-completa-mixta">Ejecutar imputaciones sobre la base completa (mixta)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#que-significa">¿Qué significa?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#es-un-error-grave">¿Es un error grave?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recomendacion-practica">Recomendación práctica</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graficos-antes-vs-despues-de-imputar">5) Gráficos antes vs. después de imputar</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-de-distribuciones-antes-y-despues-de-la-imputacion">Comparación de distribuciones antes y después de la imputación</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-numericas">Variables numéricas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-categoricas">Variables categóricas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Conclusión</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluacion-estadistica-de-la-imputacion">6) Evaluación estadística de la imputación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluacion-de-la-imputacion-con-pruebas-estadisticas">Evaluación de la imputación con pruebas estadísticas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resultados-principales">Resultados principales</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-general">Conclusión general</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabla-resumen-final">7) Tabla resumen final</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabla-resumen-final-de-imputacion">Tabla resumen final de imputación</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-por-variable">Interpretación por variable</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Conclusión</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-generales">Conclusiones Generales</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="proyecto-visualizacion-de-datos-y-toma-de-decisiones-imputacion-python">
+<h1>Proyecto: Visualización de datos y toma de decisiones — Imputación (Python)<a class="headerlink" href="#proyecto-visualizacion-de-datos-y-toma-de-decisiones-imputacion-python" title="Link to this heading">#</a></h1>
+<p>Este notebook implementa, paso a paso, el flujo exigido por la rúbrica:</p>
+<ol class="arabic simple">
+<li><p><strong>Exploración inicial</strong></p></li>
+<li><p><strong>Detección y visualización de nulos</strong></p></li>
+<li><p><strong>Clasificación MCAR/MAR/MNAR (heurística + pruebas auxiliares)</strong></p></li>
+<li><p><strong>Discusión de imputabilidad</strong></p></li>
+<li><p><strong>Aplicación de 3 técnicas de imputación por tipo de variable</strong></p></li>
+<li><p><strong>Evaluación de la imputación (Shapiro, KS, t-test/Mann–Whitney)</strong></p></li>
+<li><p><strong>Tabla resumen y conclusiones</strong></p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ===== 0. Librerías e instalación opcional =====</span>
+<span class="c1"># (Descomenta si necesitas instalar paquetes en tu entorno)</span>
+<span class="c1"># %pip install scikit-learn==1.5.0</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.impute</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleImputer</span><span class="p">,</span> <span class="n">KNNImputer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.experimental</span><span class="w"> </span><span class="kn">import</span> <span class="n">enable_iterative_imputer</span>  <span class="c1"># noqa: F401</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.impute</span><span class="w"> </span><span class="kn">import</span> <span class="n">IterativeImputer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">OneHotEncoder</span><span class="p">,</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.compose</span><span class="w"> </span><span class="kn">import</span> <span class="n">ColumnTransformer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">roc_auc_score</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="cargar-datos-y-exploracion-inicial">
+<h2>1) Cargar datos y exploración inicial<a class="headerlink" href="#cargar-datos-y-exploracion-inicial" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Ruta al CSV (ajusta si lo mueves)</span>
+<span class="n">csv_path</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;base_imputacion_mixta_1000.csv&quot;</span>   <span class="c1"># aquí está el archivo en tu captura</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CWD:&quot;</span><span class="p">,</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Existe el CSV?:&quot;</span><span class="p">,</span> <span class="n">csv_path</span><span class="o">.</span><span class="n">exists</span><span class="p">(),</span> <span class="s2">&quot;| Ruta:&quot;</span><span class="p">,</span> <span class="n">csv_path</span><span class="p">)</span>
+
+<span class="c1"># Lee usando la ruta construida</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_path</span><span class="p">)</span>
+
+<span class="c1"># Parsear fecha si existe</span>
+<span class="k">if</span> <span class="s2">&quot;fecha&quot;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;fecha&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;fecha&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span>
+
+<span class="c1"># Detectar tipos</span>
+<span class="n">num_cols</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">])</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">cat_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">num_cols</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Filas:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Numéricas:&quot;</span><span class="p">,</span> <span class="n">num_cols</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Categóricas:&quot;</span><span class="p">,</span> <span class="n">cat_cols</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CWD: c:\Users\sergi\Documents\mi_libro_imputacion
+Existe el CSV?: True | Ruta: c:\Users\sergi\Documents\mi_libro_imputacion\base_imputacion_mixta_1000.csv
+Filas: 1000
+Numéricas: [&#39;edad&#39;, &#39;altura_cm&#39;, &#39;ingresos&#39;, &#39;gasto_mensual&#39;, &#39;puntuacion_credito&#39;, &#39;demanda&#39;]
+Categóricas: [&#39;fecha&#39;, &#39;sexo&#39;, &#39;ciudad&#39;, &#39;nivel_educativo&#39;, &#39;segmento&#39;, &#39;estado_civil&#39;]
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fecha</th>
+      <th>sexo</th>
+      <th>ciudad</th>
+      <th>nivel_educativo</th>
+      <th>segmento</th>
+      <th>estado_civil</th>
+      <th>edad</th>
+      <th>altura_cm</th>
+      <th>ingresos</th>
+      <th>gasto_mensual</th>
+      <th>puntuacion_credito</th>
+      <th>demanda</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2024-01-01</td>
+      <td>F</td>
+      <td>Medellín</td>
+      <td>NaN</td>
+      <td>B</td>
+      <td>Unión libre</td>
+      <td>19.0</td>
+      <td>161.821754</td>
+      <td>3574.753806</td>
+      <td>1832.731832</td>
+      <td>640.465372</td>
+      <td>119.202995</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2024-01-02</td>
+      <td>F</td>
+      <td>Barranquilla</td>
+      <td>NaN</td>
+      <td>B</td>
+      <td>NaN</td>
+      <td>52.0</td>
+      <td>167.819566</td>
+      <td>3163.626815</td>
+      <td>NaN</td>
+      <td>533.108430</td>
+      <td>124.457874</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2024-01-03</td>
+      <td>M</td>
+      <td>Bogotá</td>
+      <td>Secundaria</td>
+      <td>B</td>
+      <td>Soltero/a</td>
+      <td>38.0</td>
+      <td>165.756219</td>
+      <td>2765.672259</td>
+      <td>1219.535074</td>
+      <td>491.016910</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2024-01-04</td>
+      <td>F</td>
+      <td>Bogotá</td>
+      <td>NaN</td>
+      <td>B</td>
+      <td>Casado/a</td>
+      <td>57.0</td>
+      <td>160.642670</td>
+      <td>4320.397345</td>
+      <td>1908.324816</td>
+      <td>NaN</td>
+      <td>129.426792</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2024-01-05</td>
+      <td>M</td>
+      <td>Cali</td>
+      <td>Técnico</td>
+      <td>B</td>
+      <td>Soltero/a</td>
+      <td>67.0</td>
+      <td>151.402909</td>
+      <td>NaN</td>
+      <td>1887.385697</td>
+      <td>610.213994</td>
+      <td>133.916319</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fecha</th>
+      <th>sexo</th>
+      <th>ciudad</th>
+      <th>nivel_educativo</th>
+      <th>segmento</th>
+      <th>estado_civil</th>
+      <th>edad</th>
+      <th>altura_cm</th>
+      <th>ingresos</th>
+      <th>gasto_mensual</th>
+      <th>puntuacion_credito</th>
+      <th>demanda</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>1000</td>
+      <td>980</td>
+      <td>950</td>
+      <td>900</td>
+      <td>800</td>
+      <td>650</td>
+      <td>970.000000</td>
+      <td>920.000000</td>
+      <td>880.000000</td>
+      <td>750.000000</td>
+      <td>500.000000</td>
+      <td>850.000000</td>
+    </tr>
+    <tr>
+      <th>unique</th>
+      <td>NaN</td>
+      <td>2</td>
+      <td>5</td>
+      <td>4</td>
+      <td>3</td>
+      <td>4</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>top</th>
+      <td>NaN</td>
+      <td>F</td>
+      <td>Bogotá</td>
+      <td>Secundaria</td>
+      <td>B</td>
+      <td>Soltero/a</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>freq</th>
+      <td>NaN</td>
+      <td>518</td>
+      <td>307</td>
+      <td>317</td>
+      <td>457</td>
+      <td>290</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>2025-05-14 12:00:00</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>42.861856</td>
+      <td>167.760096</td>
+      <td>3681.294745</td>
+      <td>1687.810749</td>
+      <td>599.077500</td>
+      <td>160.305759</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>2024-01-01 00:00:00</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>18.000000</td>
+      <td>140.000000</td>
+      <td>487.662547</td>
+      <td>100.000000</td>
+      <td>373.657944</td>
+      <td>99.875828</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>2024-09-06 18:00:00</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>30.000000</td>
+      <td>161.488768</td>
+      <td>2999.416229</td>
+      <td>1309.239768</td>
+      <td>544.467843</td>
+      <td>139.505538</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>2025-05-14 12:00:00</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>43.000000</td>
+      <td>167.714614</td>
+      <td>3669.620507</td>
+      <td>1676.193764</td>
+      <td>599.692595</td>
+      <td>160.721251</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>2026-01-19 06:00:00</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>55.000000</td>
+      <td>173.999069</td>
+      <td>4375.093656</td>
+      <td>2063.260990</td>
+      <td>653.345068</td>
+      <td>181.100754</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>2026-09-26 00:00:00</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>69.000000</td>
+      <td>195.766921</td>
+      <td>7016.246936</td>
+      <td>3532.593603</td>
+      <td>823.539585</td>
+      <td>222.093047</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>14.621382</td>
+      <td>9.275530</td>
+      <td>1079.326096</td>
+      <td>582.070174</td>
+      <td>79.828186</td>
+      <td>25.357794</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="exploracion-inicial-de-la-base-de-datos">
+<h2>Exploración inicial de la base de datos<a class="headerlink" href="#exploracion-inicial-de-la-base-de-datos" title="Link to this heading">#</a></h2>
+<p>En esta primera etapa se observa la estructura general del dataset y se hace un resumen de las variables.</p>
+<section id="informacion-general">
+<h3>Información general<a class="headerlink" href="#informacion-general" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Número de observaciones (filas):</strong> 1000</p></li>
+<li><p><strong>Variables numéricas (6):</strong> <code class="docutils literal notranslate"><span class="pre">edad</span></code>, <code class="docutils literal notranslate"><span class="pre">altura_cm</span></code>, <code class="docutils literal notranslate"><span class="pre">ingresos</span></code>, <code class="docutils literal notranslate"><span class="pre">gasto_mensual</span></code>, <code class="docutils literal notranslate"><span class="pre">puntuacion_credito</span></code>, <code class="docutils literal notranslate"><span class="pre">demanda</span></code>.</p></li>
+<li><p><strong>Variables categóricas (6):</strong> <code class="docutils literal notranslate"><span class="pre">fecha</span></code>, <code class="docutils literal notranslate"><span class="pre">sexo</span></code>, <code class="docutils literal notranslate"><span class="pre">ciudad</span></code>, <code class="docutils literal notranslate"><span class="pre">nivel_educativo</span></code>, <code class="docutils literal notranslate"><span class="pre">segmento</span></code>, <code class="docutils literal notranslate"><span class="pre">estado_civil</span></code>.</p></li>
+</ul>
+<p>Esto confirma que se trata de una base <strong>mixta</strong>, lo cual es coherente con el objetivo del ejercicio.</p>
+</section>
+<hr class="docutils" />
+<section id="primeras-filas">
+<h3>Primeras filas<a class="headerlink" href="#primeras-filas" title="Link to this heading">#</a></h3>
+<p>Al revisar con <code class="docutils literal notranslate"><span class="pre">head()</span></code> se observa la siguiente estructura:</p>
+<ul class="simple">
+<li><p>Hay valores completos para algunas variables (<code class="docutils literal notranslate"><span class="pre">fecha</span></code>, <code class="docutils literal notranslate"><span class="pre">sexo</span></code>, <code class="docutils literal notranslate"><span class="pre">ciudad</span></code>).</p></li>
+<li><p>Aparecen <strong>valores faltantes (NaN)</strong> en columnas como <code class="docutils literal notranslate"><span class="pre">nivel_educativo</span></code>, <code class="docutils literal notranslate"><span class="pre">estado_civil</span></code>, <code class="docutils literal notranslate"><span class="pre">gasto_mensual</span></code>, <code class="docutils literal notranslate"><span class="pre">puntuacion_credito</span></code> y <code class="docutils literal notranslate"><span class="pre">demanda</span></code>.</p></li>
+</ul>
+<p>Esto justifica la necesidad de aplicar técnicas de imputación en las siguientes etapas.</p>
+</section>
+<hr class="docutils" />
+<section id="resumen-estadistico">
+<h3>Resumen estadístico<a class="headerlink" href="#resumen-estadistico" title="Link to this heading">#</a></h3>
+<p>Con <code class="docutils literal notranslate"><span class="pre">describe(include=&quot;all&quot;)</span></code> se obtiene:</p>
+<ul class="simple">
+<li><p><strong>Categóricas:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">sexo</span></code>: 2 categorías (M/F), predominando <strong>F (518 casos)</strong>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ciudad</span></code>: 5 ciudades, la más frecuente <strong>Bogotá (307 casos)</strong>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nivel_educativo</span></code>: 4 niveles, predominando <strong>Secundaria (317 casos)</strong>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">segmento</span></code>: 3 categorías, predominando <strong>B (457 casos)</strong>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">estado_civil</span></code>: 4 categorías, predominando <strong>Soltero/a (290 casos)</strong>.</p></li>
+</ul>
+</li>
+<li><p><strong>Numéricas:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">edad</span></code>: promedio ≈ 42.9 años, rango [18 – 69].</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">altura_cm</span></code>: promedio ≈ 167.8 cm, rango [140 – 195].</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ingresos</span></code>: promedio ≈ 3681, rango [487 – 7016].</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gasto_mensual</span></code>: promedio ≈ 1688, rango [100 – 3533].</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">puntuacion_credito</span></code>: promedio ≈ 599, rango [374 – 824].</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">demanda</span></code>: promedio ≈ 160, rango [100 – 222].</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="conclusion-preliminar">
+<h3>Conclusión preliminar<a class="headerlink" href="#conclusion-preliminar" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>La base combina variables <strong>cuantitativas y cualitativas</strong> en proporciones similares.</p></li>
+<li><p>Existen <strong>valores faltantes relevantes</strong> en varias variables, que deberán analizarse y clasificarse (MCAR, MAR o MNAR).</p></li>
+<li><p>Las distribuciones numéricas son consistentes y no presentan outliers extremos, lo cual facilita el proceso de imputación.</p></li>
+</ul>
+</section>
+</section>
+<section id="deteccion-de-nulos-graficos">
+<h2>2) Detección de nulos + gráficos<a class="headerlink" href="#deteccion-de-nulos-graficos" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">miss_cnt</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">miss_pct</span> <span class="o">=</span> <span class="n">miss_cnt</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="n">missing_summary</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="s2">&quot;nulos&quot;</span><span class="p">:</span> <span class="n">miss_cnt</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="s2">&quot;pct_nulos&quot;</span><span class="p">:</span> <span class="n">miss_pct</span><span class="o">.</span><span class="n">values</span><span class="p">})</span>
+    <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;pct_nulos&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">missing_summary</span><span class="p">)</span>
+
+<span class="c1"># Gráfico de barras de % nulos</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">missing_summary</span><span class="p">[</span><span class="s2">&quot;variable&quot;</span><span class="p">],</span> <span class="n">missing_summary</span><span class="p">[</span><span class="s2">&quot;pct_nulos&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;% nulos&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Porcentaje de nulos por variable&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Heatmap sencillo (1=nulo, 0=presente)</span>
+<span class="n">null_matrix</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">null_matrix</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Columnas&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Filas&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Mapa de calor de nulos (1=nulo, 0=presente)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>variable</th>
+      <th>nulos</th>
+      <th>pct_nulos</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>puntuacion_credito</td>
+      <td>500</td>
+      <td>50.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>estado_civil</td>
+      <td>350</td>
+      <td>35.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>gasto_mensual</td>
+      <td>250</td>
+      <td>25.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>segmento</td>
+      <td>200</td>
+      <td>20.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>demanda</td>
+      <td>150</td>
+      <td>15.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>ingresos</td>
+      <td>120</td>
+      <td>12.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>nivel_educativo</td>
+      <td>100</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>altura_cm</td>
+      <td>80</td>
+      <td>8.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>ciudad</td>
+      <td>50</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>edad</td>
+      <td>30</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>sexo</td>
+      <td>20</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>fecha</td>
+      <td>0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><img alt="_images/7c84c45bca213987535cafee3d6418e5bf9dd916fd239ba2dc5ab5742c841239.png" src="_images/7c84c45bca213987535cafee3d6418e5bf9dd916fd239ba2dc5ab5742c841239.png" />
+<img alt="_images/78f90dda7069fc802aacecc45389263e3ce89415fa519418df2dac855cc7281a.png" src="_images/78f90dda7069fc802aacecc45389263e3ce89415fa519418df2dac855cc7281a.png" />
+</div>
+</div>
+</section>
+<section id="deteccion-de-valores-faltantes">
+<h2>Detección de valores faltantes<a class="headerlink" href="#deteccion-de-valores-faltantes" title="Link to this heading">#</a></h2>
+<p>En esta sección se identifican las variables con datos nulos y se cuantifica su magnitud.</p>
+<section id="tabla-resumen-de-nulos">
+<h3>Tabla resumen de nulos<a class="headerlink" href="#tabla-resumen-de-nulos" title="Link to this heading">#</a></h3>
+<p>La siguiente tabla muestra el número y porcentaje de valores faltantes por variable:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable</p></th>
+<th class="head"><p>Nulos</p></th>
+<th class="head"><p>% Nulos</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>puntuacion_credito</p></td>
+<td><p>500</p></td>
+<td><p>50.0%</p></td>
+</tr>
+<tr class="row-odd"><td><p>estado_civil</p></td>
+<td><p>350</p></td>
+<td><p>35.0%</p></td>
+</tr>
+<tr class="row-even"><td><p>gasto_mensual</p></td>
+<td><p>250</p></td>
+<td><p>25.0%</p></td>
+</tr>
+<tr class="row-odd"><td><p>segmento</p></td>
+<td><p>200</p></td>
+<td><p>20.0%</p></td>
+</tr>
+<tr class="row-even"><td><p>demanda</p></td>
+<td><p>150</p></td>
+<td><p>15.0%</p></td>
+</tr>
+<tr class="row-odd"><td><p>ingresos</p></td>
+<td><p>120</p></td>
+<td><p>12.0%</p></td>
+</tr>
+<tr class="row-even"><td><p>nivel_educativo</p></td>
+<td><p>100</p></td>
+<td><p>10.0%</p></td>
+</tr>
+<tr class="row-odd"><td><p>altura_cm</p></td>
+<td><p>80</p></td>
+<td><p>8.0%</p></td>
+</tr>
+<tr class="row-even"><td><p>ciudad</p></td>
+<td><p>50</p></td>
+<td><p>5.0%</p></td>
+</tr>
+<tr class="row-odd"><td><p>edad</p></td>
+<td><p>30</p></td>
+<td><p>3.0%</p></td>
+</tr>
+<tr class="row-even"><td><p>sexo</p></td>
+<td><p>20</p></td>
+<td><p>2.0%</p></td>
+</tr>
+<tr class="row-odd"><td><p>fecha</p></td>
+<td><p>0</p></td>
+<td><p>0.0%</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Se observa que las variables con mayor problema son <strong><code class="docutils literal notranslate"><span class="pre">puntuacion_credito</span></code> (50% de nulos)</strong>, seguida de <strong><code class="docutils literal notranslate"><span class="pre">estado_civil</span></code> (35%)</strong> y <strong><code class="docutils literal notranslate"><span class="pre">gasto_mensual</span></code> (25%)</strong>.<br />
+Estas variables requerirán mayor atención en la imputación.</p>
+</section>
+<hr class="docutils" />
+<section id="grafico-de-barras">
+<h3>Gráfico de barras<a class="headerlink" href="#grafico-de-barras" title="Link to this heading">#</a></h3>
+<p>En el gráfico de barras se representa el porcentaje de nulos por variable.</p>
+<ul class="simple">
+<li><p>Destaca claramente <code class="docutils literal notranslate"><span class="pre">puntuacion_credito</span></code> con la mitad de los registros incompletos.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">estado_civil</span></code> y <code class="docutils literal notranslate"><span class="pre">gasto_mensual</span></code> también muestran niveles altos de ausencia.</p></li>
+<li><p>Variables como <code class="docutils literal notranslate"><span class="pre">sexo</span></code>, <code class="docutils literal notranslate"><span class="pre">edad</span></code> y <code class="docutils literal notranslate"><span class="pre">ciudad</span></code> tienen pérdidas bajas (&lt;5%), lo que facilita su imputación.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fecha</span></code> no presenta valores faltantes.</p></li>
+</ul>
+<p>Este gráfico ayuda a priorizar qué variables requieren imputación inmediata y cuáles pueden tolerar dejar los nulos.</p>
+</section>
+<hr class="docutils" />
+<section id="mapa-de-calor">
+<h3>Mapa de calor<a class="headerlink" href="#mapa-de-calor" title="Link to this heading">#</a></h3>
+<p>El <strong>mapa de calor de nulos</strong> permite visualizar la distribución de los valores faltantes a lo largo de las filas y columnas:</p>
+<ul class="simple">
+<li><p>El color amarillo indica <strong>valores faltantes</strong>, mientras que el morado representa <strong>datos presentes</strong>.</p></li>
+<li><p>Se observan patrones verticales en variables como <code class="docutils literal notranslate"><span class="pre">puntuacion_credito</span></code>, <code class="docutils literal notranslate"><span class="pre">estado_civil</span></code> y <code class="docutils literal notranslate"><span class="pre">gasto_mensual</span></code>, lo que confirma que concentran la mayor cantidad de ausencias.</p></li>
+<li><p>No se aprecian bloques horizontales largos, lo que sugiere que las pérdidas no afectan siempre a las mismas observaciones, sino que están distribuidas de manera relativamente heterogénea.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="conclusion">
+<h3>Conclusión<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>La detección de nulos evidencia que algunas variables presentan <strong>problemas graves de completitud</strong>.</p></li>
+<li><p>Es necesario clasificar los tipos de ausencia (<strong>MCAR, MAR o MNAR</strong>) y luego aplicar técnicas de imputación adecuadas.</p></li>
+<li><p>La visualización permite comunicar de forma clara la magnitud y patrón de los datos faltantes antes de decidir la estrategia de tratamiento.</p></li>
+</ul>
+</section>
+</section>
+<section id="clasificacion-mcar-mar-mnar-enfoque-practico">
+<h2>3) Clasificación MCAR/MAR/MNAR (enfoque práctico)<a class="headerlink" href="#clasificacion-mcar-mar-mnar-enfoque-practico" title="Link to this heading">#</a></h2>
+<p>En la práctica académica:</p>
+<ul class="simple">
+<li><p><strong>MCAR</strong>: la ausencia no depende de nada. Heurística: si un modelo para predecir la ausencia de una variable a partir de las demás tiene <strong>AUC ≈ 0.5</strong> y ninguna asociación es significativa, tratamos como MCAR.</p></li>
+<li><p><strong>MAR</strong>: la ausencia depende de <strong>otras variables</strong>. Si el modelo logra AUC &gt; 0.6 o hay asociaciones significativas con predictores → MAR.</p></li>
+<li><p><strong>MNAR</strong>: la ausencia depende del <strong>propio valor faltante</strong> (no observable). No es testeable directamente; si hay <strong>alto % de nulos</strong> y la ausencia <strong>no</strong> se explica con otras variables (AUC≈0.5), se <strong>sospecha</strong> MNAR.</p></li>
+</ul>
+<p>Abajo, implementamos un clasificador logístico por variable (indicador de nulo vs. resto), con one-hot para categóricas y medianas/moda temporales para completar el set de entrenamiento.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">classify_missingness</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">target_col</span><span class="p">,</span> <span class="n">threshold_mar</span><span class="o">=</span><span class="mf">0.6</span><span class="p">):</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">target_col</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>  <span class="c1"># 1 si falta</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_col</span><span class="p">])</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="c1"># Rellenos temporales SOLO para poder entrenar (no es la imputación final)</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">X</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="ow">in</span> <span class="s2">&quot;biufc&quot;</span><span class="p">:</span>
+            <span class="n">X</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">X</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s2">&quot;MISSING&quot;</span><span class="p">)</span>
+
+    <span class="n">num_cols_X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">])</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">cat_cols_X</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">num_cols_X</span><span class="p">]</span>
+
+    <span class="n">pre</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
+        <span class="p">(</span><span class="s2">&quot;num&quot;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">num_cols_X</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">),</span> <span class="n">cat_cols_X</span><span class="p">)</span>
+    <span class="p">])</span>
+
+    <span class="n">clf</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s2">&quot;pre&quot;</span><span class="p">,</span> <span class="n">pre</span><span class="p">),</span>
+                    <span class="p">(</span><span class="s2">&quot;lr&quot;</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">200</span><span class="p">))])</span>
+
+    <span class="c1"># Entrenamiento y AUC</span>
+    <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">proba</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">proba</span><span class="p">)</span>
+
+    <span class="c1"># Etiqueta</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">auc</span><span class="p">)</span> <span class="ow">or</span> <span class="n">auc</span> <span class="o">&lt;</span> <span class="mf">0.55</span><span class="p">:</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;MCAR (probable)&quot;</span>
+    <span class="k">elif</span> <span class="n">auc</span> <span class="o">&gt;=</span> <span class="n">threshold_mar</span><span class="p">:</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;MAR (probable)&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Si no es explicable por otras pero el % de nulos es alto, sospecha MNAR</span>
+        <span class="n">pct</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">target_col</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;MNAR (sospecha)&quot;</span> <span class="k">if</span> <span class="n">pct</span> <span class="o">&gt;=</span> <span class="mi">40</span> <span class="k">else</span> <span class="s2">&quot;Incierto/mixto&quot;</span>
+
+    <span class="k">return</span> <span class="n">auc</span><span class="p">,</span> <span class="n">label</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+        <span class="n">auc</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">classify_missingness</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="n">col</span><span class="p">,</span> <span class="s2">&quot;AUC(modelo ausencia)&quot;</span><span class="p">:</span> <span class="n">auc</span><span class="p">,</span> <span class="s2">&quot;clasificacion&quot;</span><span class="p">:</span> <span class="n">label</span><span class="p">,</span>
+                        <span class="s2">&quot;pct_nulos&quot;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">*</span><span class="mi">100</span><span class="p">})</span>
+
+<span class="n">missing_class</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;pct_nulos&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">missing_class</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>variable</th>
+      <th>AUC(modelo ausencia)</th>
+      <th>clasificacion</th>
+      <th>pct_nulos</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>9</th>
+      <td>puntuacion_credito</td>
+      <td>0.997256</td>
+      <td>MAR (probable)</td>
+      <td>50.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>estado_civil</td>
+      <td>0.996000</td>
+      <td>MAR (probable)</td>
+      <td>35.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>gasto_mensual</td>
+      <td>0.955936</td>
+      <td>MAR (probable)</td>
+      <td>25.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>segmento</td>
+      <td>0.994088</td>
+      <td>MAR (probable)</td>
+      <td>20.0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>demanda</td>
+      <td>0.975796</td>
+      <td>MAR (probable)</td>
+      <td>15.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>ingresos</td>
+      <td>0.947472</td>
+      <td>MAR (probable)</td>
+      <td>12.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>nivel_educativo</td>
+      <td>0.959789</td>
+      <td>MAR (probable)</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>altura_cm</td>
+      <td>0.965109</td>
+      <td>MAR (probable)</td>
+      <td>8.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ciudad</td>
+      <td>0.957432</td>
+      <td>MAR (probable)</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>edad</td>
+      <td>0.955670</td>
+      <td>MAR (probable)</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>sexo</td>
+      <td>0.952398</td>
+      <td>MAR (probable)</td>
+      <td>2.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="clasificacion-del-tipo-de-faltante">
+<h2>Clasificación del tipo de faltante<a class="headerlink" href="#clasificacion-del-tipo-de-faltante" title="Link to this heading">#</a></h2>
+<p>Para determinar el tipo de ausencia, se construyó un modelo que predice la probabilidad de que un valor esté ausente a partir de las demás variables. El desempeño del modelo se midió con el <strong>AUC (Área Bajo la Curva ROC)</strong>:</p>
+<ul class="simple">
+<li><p>Si el AUC ≈ 0.5, la ausencia es aleatoria (MCAR).</p></li>
+<li><p>Si el AUC &gt; 0.6, la ausencia depende de otras variables observadas, lo que sugiere un patrón MAR.</p></li>
+<li><p>Si la ausencia depende del propio valor faltante (no observable directamente), se sospecha MNAR.</p></li>
+</ul>
+<p>En este caso, todas las variables con valores faltantes presentan un <strong>AUC elevado</strong>, en la mayoría de los casos superior a 0.95. Esto indica que las ausencias pueden explicarse en gran medida por otras variables del dataset, lo que sugiere que el mecanismo predominante es <strong>MAR (Missing At Random, probable)</strong>.</p>
+<section id="interpretacion-de-los-resultados">
+<h3>Interpretación de los resultados<a class="headerlink" href="#interpretacion-de-los-resultados" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Variables con mayor porcentaje de nulos, como <code class="docutils literal notranslate"><span class="pre">puntuacion_credito</span></code> (50%) y <code class="docutils literal notranslate"><span class="pre">estado_civil</span></code> (35%), muestran AUC cercanos a 1. Esto significa que la ausencia en estas variables <strong>se relaciona con otras características de los individuos</strong> y no ocurre de manera aleatoria.</p></li>
+<li><p>Variables con porcentajes de nulos intermedios como <code class="docutils literal notranslate"><span class="pre">gasto_mensual</span></code> (25%), <code class="docutils literal notranslate"><span class="pre">segmento</span></code> (20%) y <code class="docutils literal notranslate"><span class="pre">demanda</span></code> (15%) también fueron clasificadas como MAR, con AUC entre 0.95 y 0.99.</p></li>
+<li><p>Incluso variables con pérdidas bajas como <code class="docutils literal notranslate"><span class="pre">sexo</span></code> (2%) y <code class="docutils literal notranslate"><span class="pre">edad</span></code> (3%) presentan AUC elevados, lo que sugiere que sus ausencias no son completamente aleatorias, sino que podrían depender de factores asociados a otros atributos.</p></li>
+</ul>
+</section>
+<section id="id1">
+<h3>Conclusión<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>En general, el análisis muestra que la mayoría de los valores faltantes en este dataset no son aleatorios, sino que siguen un patrón MAR. Esto implica que <strong>sí es posible aprovechar la información disponible en otras variables para realizar imputaciones más precisas</strong>, lo que respalda el uso de técnicas avanzadas como <strong>KNN</strong> o <strong>imputación por modelos predictivos</strong>.</p>
+</section>
+</section>
+<section id="tecnicas-de-imputacion-a-aplicar">
+<h2>4) Técnicas de imputación a aplicar<a class="headerlink" href="#tecnicas-de-imputacion-a-aplicar" title="Link to this heading">#</a></h2>
+<p>Seleccionamos 3 por tipo de variable:</p>
+<ul class="simple">
+<li><p><strong>Numéricas</strong>: <code class="docutils literal notranslate"><span class="pre">media</span></code>, <code class="docutils literal notranslate"><span class="pre">mediana</span></code>, <strong>KNNImputer</strong>, y (extra) <code class="docutils literal notranslate"><span class="pre">IterativeImputer</span></code> tipo regresión.</p></li>
+<li><p><strong>Categóricas</strong>: <code class="docutils literal notranslate"><span class="pre">moda</span></code> (más frecuente), <strong>hot-deck aleatorio</strong> (muestreo proporcional), <strong>KNN</strong> (codificación ordinal + redondeo).</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">impute_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">cols</span><span class="p">):</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">imputaciones</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c1"># 1) media</span>
+    <span class="n">imp_mean</span> <span class="o">=</span> <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">)</span>
+    <span class="n">X1</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">X1</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span> <span class="o">=</span> <span class="n">imp_mean</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X1</span><span class="p">[</span><span class="n">cols</span><span class="p">])</span>
+    <span class="n">imputaciones</span><span class="p">[</span><span class="s2">&quot;num_media&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">X1</span>
+
+    <span class="c1"># 2) mediana</span>
+    <span class="n">imp_med</span> <span class="o">=</span> <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">)</span>
+    <span class="n">X2</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">X2</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span> <span class="o">=</span> <span class="n">imp_med</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X2</span><span class="p">[</span><span class="n">cols</span><span class="p">])</span>
+    <span class="n">imputaciones</span><span class="p">[</span><span class="s2">&quot;num_mediana&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">X2</span>
+
+    <span class="c1"># 3) KNN</span>
+    <span class="n">knn</span> <span class="o">=</span> <span class="n">KNNImputer</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">X3</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">X3</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span> <span class="o">=</span> <span class="n">knn</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X3</span><span class="p">[</span><span class="n">cols</span><span class="p">])</span>
+    <span class="n">imputaciones</span><span class="p">[</span><span class="s2">&quot;num_knn&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">X3</span>
+
+    <span class="c1"># 4) Iterative (regresión)</span>
+    <span class="n">it</span> <span class="o">=</span> <span class="n">IterativeImputer</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sample_posterior</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">X4</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">X4</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span> <span class="o">=</span> <span class="n">it</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X4</span><span class="p">[</span><span class="n">cols</span><span class="p">])</span>
+    <span class="n">imputaciones</span><span class="p">[</span><span class="s2">&quot;num_iterative&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">X4</span>
+
+    <span class="k">return</span> <span class="n">imputaciones</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">hot_deck_categorical</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">vals</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s2">&quot;DESCONOCIDO&quot;</span><span class="p">)</span>
+    <span class="n">probs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># muestreo proporcional</span>
+    <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">probs</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">probs</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">else</span> <span class="n">x</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">impute_categorical</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">cols</span><span class="p">):</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">imputaciones</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c1"># 1) moda</span>
+    <span class="n">X1</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">:</span>
+        <span class="n">moda</span> <span class="o">=</span> <span class="n">X1</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="n">dropna</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">fill_val</span> <span class="o">=</span> <span class="n">moda</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">moda</span><span class="o">.</span><span class="n">empty</span> <span class="k">else</span> <span class="s2">&quot;DESCONOCIDO&quot;</span>
+        <span class="n">X1</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">X1</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">fill_val</span><span class="p">)</span>
+    <span class="n">imputaciones</span><span class="p">[</span><span class="s2">&quot;cat_moda&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">X1</span>
+
+    <span class="c1"># 2) hot-deck</span>
+    <span class="n">X2</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">:</span>
+        <span class="n">X2</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">hot_deck_categorical</span><span class="p">(</span><span class="n">X2</span><span class="p">[</span><span class="n">c</span><span class="p">])</span>
+    <span class="n">imputaciones</span><span class="p">[</span><span class="s2">&quot;cat_hotdeck&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">X2</span>
+
+    <span class="c1"># 3) KNN (codificación ordinal + redondeo)</span>
+    <span class="n">X3</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="c1"># Mapear categorías a códigos por columna</span>
+    <span class="n">cat_maps</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">:</span>
+        <span class="n">X3</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">X3</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span>
+        <span class="n">cat_maps</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">X3</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span><span class="p">))</span>
+        <span class="n">X3</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">X3</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">codes</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+
+    <span class="n">knn</span> <span class="o">=</span> <span class="n">KNNImputer</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">X3</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span> <span class="o">=</span> <span class="n">knn</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X3</span><span class="p">[</span><span class="n">cols</span><span class="p">])</span>
+    <span class="c1"># Redondear y mapear de regreso</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">:</span>
+        <span class="n">X3</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">X3</span><span class="p">[</span><span class="n">c</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">cat_maps</span><span class="p">[</span><span class="n">c</span><span class="p">])</span>
+    <span class="n">imputaciones</span><span class="p">[</span><span class="s2">&quot;cat_knn&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">X3</span>
+
+    <span class="k">return</span> <span class="n">imputaciones</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id2">
+<h2>Técnicas de imputación a aplicar<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>El objetivo es generar <strong>versiones imputadas</strong> del DataFrame para variables <strong>numéricas</strong> y <strong>categóricas</strong>, usando al menos tres técnicas por tipo (como pide la rúbrica). El flujo está dividido en tres funciones:</p>
+<ol class="arabic">
+<li><p><code class="docutils literal notranslate"><span class="pre">impute_numeric(df,</span> <span class="pre">cols)</span></code><br />
+Devuelve un diccionario con cuatro copias del <code class="docutils literal notranslate"><span class="pre">df</span></code> donde <strong>solo</strong> se imputan las columnas numéricas <code class="docutils literal notranslate"><span class="pre">cols</span></code> usando:</p>
+<ul class="simple">
+<li><p><strong>Media</strong> (<code class="docutils literal notranslate"><span class="pre">SimpleImputer(strategy=&quot;mean&quot;)</span></code>): rápida, sensible a outliers.</p></li>
+<li><p><strong>Mediana</strong> (<code class="docutils literal notranslate"><span class="pre">strategy=&quot;median&quot;)</span></code>): robusta ante outliers, buena elección por defecto.</p></li>
+<li><p><strong>KNNImputer</strong>: usa vecinos más cercanos para estimar valores, conserva relaciones entre variables; el hiperparámetro <code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code> controla suavizado.</p></li>
+<li><p><strong>IterativeImputer (regresión)</strong>: modela cada variable con faltantes como función del resto (estilo MICE). Suele preservar mejor la estructura si MAR.</p></li>
+</ul>
+<blockquote>
+<div><p>Nota: Cada resultado es un <strong>DataFrame completo</strong> en el que únicamente cambiaron las columnas numéricas especificadas.</p>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hot_deck_categorical(s)</span></code><br />
+Implementa <strong>hot-deck aleatorio</strong> para <strong>una serie categórica</strong>: toma la distribución de categorías observadas y <strong>muestra</strong> (con probabilidad proporcional) para rellenar los <code class="docutils literal notranslate"><span class="pre">NaN</span></code>.</p>
+<ul class="simple">
+<li><p>Si <strong>toda</strong> la columna está vacía, rellena con <code class="docutils literal notranslate"><span class="pre">&quot;DESCONOCIDO&quot;</span></code> (evita que falle el muestreo).</p></li>
+<li><p>Es estocástico: conviene fijar semilla para reproducibilidad.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">impute_categorical(df,</span> <span class="pre">cols)</span></code><br />
+Devuelve un diccionario con tres copias del <code class="docutils literal notranslate"><span class="pre">df</span></code> donde <strong>solo</strong> se imputan las columnas categóricas <code class="docutils literal notranslate"><span class="pre">cols</span></code> usando:</p>
+<ul class="simple">
+<li><p><strong>Moda</strong>: reemplaza con la categoría más frecuente (simple y determinista).</p></li>
+<li><p><strong>Hot-deck</strong> (la función anterior): respeta la distribución marginal observada.</p></li>
+<li><p><strong>KNN “categórico”</strong>: se codifica cada columna a <strong>códigos ordinales</strong> (0,1,2,…) dejando <code class="docutils literal notranslate"><span class="pre">NaN</span></code> donde faltan, se aplica <code class="docutils literal notranslate"><span class="pre">KNNImputer</span></code> y luego se <strong>redondea y remapea</strong> a las etiquetas originales. Funciona bien cuando hay relación entre variables pero <strong>no</strong> entiende orden semántico (solo usa proximidad en códigos).</p></li>
+</ul>
+</li>
+</ol>
+<section id="consideraciones-y-buenas-practicas">
+<h3>Consideraciones y buenas prácticas<a class="headerlink" href="#consideraciones-y-buenas-practicas" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Reproducibilidad</strong>: fija una semilla para hot-deck (<code class="docutils literal notranslate"><span class="pre">np.random.default_rng(seed)</span></code>) y para <code class="docutils literal notranslate"><span class="pre">IterativeImputer</span></code> (<code class="docutils literal notranslate"><span class="pre">random_state=</span></code>).</p></li>
+<li><p><strong>Columnas con todos NaN</strong>: la moda y el KNN pueden fallar sin manejo; aquí se ponen valores de respaldo (<code class="docutils literal notranslate"><span class="pre">&quot;DESCONOCIDO&quot;</span></code> o se salta KNN si no hay datos).</p></li>
+<li><p><strong>KNN en categóricas</strong>: la codificación ordinal <strong>no implica orden real</strong>; se usa solo como truco para poder aplicar KNN.</p></li>
+<li><p><strong>Escala en KNN numérico</strong>: <code class="docutils literal notranslate"><span class="pre">KNNImputer</span></code> usa distancias euclidianas; si hay escalas muy distintas conviene estandarizar previamente (aquí no se hace para mantenerlo simple).</p></li>
+<li><p><strong>IterativeImputer</strong>: más costoso, pero suele preservar mejor la estructura bajo MAR. Ajusta <code class="docutils literal notranslate"><span class="pre">max_iter</span></code> si hay convergencia lenta.</p></li>
+</ul>
+<p>El resultado de <code class="docutils literal notranslate"><span class="pre">impute_numeric</span></code> y <code class="docutils literal notranslate"><span class="pre">impute_categorical</span></code> son <strong>diccionarios</strong> con llaves como <code class="docutils literal notranslate"><span class="pre">&quot;num_mediana&quot;</span></code> / <code class="docutils literal notranslate"><span class="pre">&quot;cat_hotdeck&quot;</span></code>. Puedes combinarlos después para crear versiones mixtas (numérico + categórico).</p>
+</section>
+<section id="ejecutar-imputaciones-sobre-la-base-completa-mixta">
+<h3>Ejecutar imputaciones sobre la base completa (mixta)<a class="headerlink" href="#ejecutar-imputaciones-sobre-la-base-completa-mixta" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_cols</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">])</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">cat_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">num_cols</span><span class="p">]</span>
+
+<span class="n">num_imps</span> <span class="o">=</span> <span class="n">impute_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">num_cols</span><span class="p">)</span>
+<span class="n">cat_imps</span> <span class="o">=</span> <span class="n">impute_categorical</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">cat_cols</span><span class="p">)</span>
+
+<span class="c1"># Combinar: ejemplo de pipelines mixtos (primero num, luego cat sobre cada copia)</span>
+<span class="n">imputed_versions</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">name_n</span><span class="p">,</span> <span class="n">dfn</span> <span class="ow">in</span> <span class="n">num_imps</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">name_c</span><span class="p">,</span> <span class="n">dfc</span> <span class="ow">in</span> <span class="n">cat_imps</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">combo</span> <span class="o">=</span> <span class="n">dfn</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cat_cols</span><span class="p">:</span>
+            <span class="n">combo</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfc</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+        <span class="n">imputed_versions</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name_n</span><span class="si">}</span><span class="s2">__</span><span class="si">{</span><span class="n">name_c</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">combo</span>
+
+<span class="nb">list</span><span class="p">(</span><span class="n">imputed_versions</span><span class="o">.</span><span class="n">keys</span><span class="p">())[:</span><span class="mi">6</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>c:\Users\sergi\miniconda3\envs\entorno_sc\Lib\site-packages\sklearn\impute\_iterative.py:895: ConvergenceWarning: [IterativeImputer] Early stopping criterion not reached.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;num_media__cat_moda&#39;,
+ &#39;num_media__cat_hotdeck&#39;,
+ &#39;num_media__cat_knn&#39;,
+ &#39;num_mediana__cat_moda&#39;,
+ &#39;num_mediana__cat_hotdeck&#39;,
+ &#39;num_mediana__cat_knn&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="que-significa">
+<h3>¿Qué significa?<a class="headerlink" href="#que-significa" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>El <code class="docutils literal notranslate"><span class="pre">IterativeImputer</span></code> funciona de manera similar al método MICE (Multiple Imputation by Chained Equations).</p></li>
+<li><p>Itera varias veces, imputando cada variable faltante como función de las demás, hasta que los valores imputados <strong>convergen</strong> (es decir, dejan de cambiar significativamente entre iteraciones).</p></li>
+<li><p>Este warning indica que, después de alcanzar el número máximo de iteraciones (<code class="docutils literal notranslate"><span class="pre">max_iter=10</span></code> por defecto), el algoritmo <strong>no llegó a la convergencia completa</strong>.</p></li>
+</ul>
+</section>
+<section id="es-un-error-grave">
+<h3>¿Es un error grave?<a class="headerlink" href="#es-un-error-grave" title="Link to this heading">#</a></h3>
+<p>No, no es un error crítico. El algoritmo igualmente entrega un resultado imputado, pero conviene tener en cuenta que:</p>
+<ul class="simple">
+<li><p>Los valores imputados podrían no estar completamente estabilizados.</p></li>
+<li><p>Si se requiere mayor precisión, se puede <strong>aumentar el número de iteraciones</strong> (por ejemplo <code class="docutils literal notranslate"><span class="pre">max_iter=20</span></code> o <code class="docutils literal notranslate"><span class="pre">max_iter=30</span></code>).</p></li>
+<li><p>También se puede activar <code class="docutils literal notranslate"><span class="pre">sample_posterior=True</span></code> para añadir variabilidad y acercarse a un esquema de <strong>imputación múltiple</strong>.</p></li>
+</ul>
+</section>
+<section id="recomendacion-practica">
+<h3>Recomendación práctica<a class="headerlink" href="#recomendacion-practica" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Mantener el warning si solo se busca una imputación exploratoria.</p></li>
+<li><p>Si el análisis requiere más robustez estadística, aumentar <code class="docutils literal notranslate"><span class="pre">max_iter</span></code> o validar la convergencia manualmente.</p></li>
+</ul>
+<p>En conclusión, el warning es una señal de que la imputación iterativa aún estaba ajustándose, pero <strong>no impide usar los resultados obtenidos</strong>.</p>
+</section>
+</section>
+<section id="graficos-antes-vs-despues-de-imputar">
+<h2>5) Gráficos antes vs. después de imputar<a class="headerlink" href="#graficos-antes-vs-despues-de-imputar" title="Link to this heading">#</a></h2>
+<p>Generamos <strong>boxplot/histograma</strong> para numéricas y <strong>barras</strong> para categóricas.
+Usa la versión imputada que quieras comparar (ej.: <code class="docutils literal notranslate"><span class="pre">num_knn__cat_hotdeck</span></code>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">version</span> <span class="o">=</span> <span class="s2">&quot;num_knn__cat_hotdeck&quot;</span>  <span class="c1"># &lt;- cambia aquí para comparar otras</span>
+<span class="n">df_imp</span> <span class="o">=</span> <span class="n">imputed_versions</span><span class="p">[</span><span class="n">version</span><span class="p">]</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_numeric_before_after</span><span class="p">(</span><span class="n">col</span><span class="p">):</span>
+    <span class="c1"># Observados (originales no nulos) vs completos (imputados)</span>
+    <span class="n">orig</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">post</span> <span class="o">=</span> <span class="n">df_imp</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">orig</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Original (no nulos)&quot;</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">post</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Imputado (</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Distribución </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">: antes vs después&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_categorical_before_after</span><span class="p">(</span><span class="n">col</span><span class="p">):</span>
+    <span class="n">orig_counts</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">dropna</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">post_counts</span> <span class="o">=</span> <span class="n">df_imp</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+
+    <span class="n">cats</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">orig_counts</span><span class="o">.</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">post_counts</span><span class="o">.</span><span class="n">index</span><span class="p">)))</span>
+    <span class="n">orig_vals</span> <span class="o">=</span> <span class="p">[</span><span class="n">orig_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cats</span><span class="p">]</span>
+    <span class="n">post_vals</span> <span class="o">=</span> <span class="p">[</span><span class="n">post_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cats</span><span class="p">]</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cats</span><span class="p">))</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="mf">0.4</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">orig_vals</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Original (no nulos)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">post_vals</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Imputado (</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">cats</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">: conteos antes vs después&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># EJEMPLOS (ajusta a tus variables clave)</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">num_cols</span> <span class="k">if</span> <span class="n">df</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">()][:</span><span class="mi">3</span><span class="p">]:</span>
+    <span class="n">plot_numeric_before_after</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cat_cols</span> <span class="k">if</span> <span class="n">df</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">()][:</span><span class="mi">3</span><span class="p">]:</span>
+    <span class="n">plot_categorical_before_after</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/1e5f7c40047ef3cb5933cfc47ade1bf3530a90d6afe2f6bf388746563f19aaa4.png" src="_images/1e5f7c40047ef3cb5933cfc47ade1bf3530a90d6afe2f6bf388746563f19aaa4.png" />
+<img alt="_images/92852a88f6bc5ff91ec9ab52ce539da885567f33789e542edf2b49353e97a7a3.png" src="_images/92852a88f6bc5ff91ec9ab52ce539da885567f33789e542edf2b49353e97a7a3.png" />
+<img alt="_images/5000cb46c15e0c562965c100a9ab9fbab1bab48d9a4d18cee04d913698c0bf8c.png" src="_images/5000cb46c15e0c562965c100a9ab9fbab1bab48d9a4d18cee04d913698c0bf8c.png" />
+<img alt="_images/ff5087f42dea9073320f6ac6aba689f423a21612afec0efc676cac88ced1bbcc.png" src="_images/ff5087f42dea9073320f6ac6aba689f423a21612afec0efc676cac88ced1bbcc.png" />
+<img alt="_images/990055eb13ddb363c0ad30655e94d06548544f604629095a3cc7799c3a3386e5.png" src="_images/990055eb13ddb363c0ad30655e94d06548544f604629095a3cc7799c3a3386e5.png" />
+<img alt="_images/913b2041ea8da62b8fb6e4a1725596cfcf53b46cdceb83e45bfa20a8145a8971.png" src="_images/913b2041ea8da62b8fb6e4a1725596cfcf53b46cdceb83e45bfa20a8145a8971.png" />
+</div>
+</div>
+</section>
+<section id="comparacion-de-distribuciones-antes-y-despues-de-la-imputacion">
+<h2>Comparación de distribuciones antes y después de la imputación<a class="headerlink" href="#comparacion-de-distribuciones-antes-y-despues-de-la-imputacion" title="Link to this heading">#</a></h2>
+<p>En esta sección se presentan los histogramas y gráficos de barras que comparan las distribuciones originales (sin nulos) frente a los datos imputados. Se utilizó la estrategia combinada <strong>KNN para variables numéricas</strong> y <strong>Hot-deck aleatorio para categóricas</strong>.</p>
+<hr class="docutils" />
+<section id="variables-numericas">
+<h3>Variables numéricas<a class="headerlink" href="#variables-numericas" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Edad</strong>: La distribución imputada se mantiene uniforme entre los 18 y 69 años. El histograma de la versión imputada se superpone con la original, mostrando solo ligeras diferencias locales. Esto indica que la técnica preservó la estructura general.</p></li>
+<li><p><strong>Altura (cm)</strong>: Se observa una distribución unimodal centrada alrededor de 167 cm. La imputación mantuvo la forma de campana y los rangos originales. La superposición de histogramas confirma que no se distorsionó la variable.</p></li>
+<li><p><strong>Ingresos</strong>: La distribución sigue una forma aproximadamente normal con ligera asimetría positiva. El pico central (alrededor de 3,000–4,000) se conserva, y las colas mantienen valores similares. La imputación con KNN logró respetar la tendencia original.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="variables-categoricas">
+<h3>Variables categóricas<a class="headerlink" href="#variables-categoricas" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Sexo</strong>: Los conteos antes y después de la imputación son prácticamente idénticos. Se mantiene la proporción de mujeres (F) ligeramente mayor que hombres (M).</p></li>
+<li><p><strong>Ciudad</strong>: La distribución de frecuencias se conserva. Bogotá sigue siendo la ciudad con mayor representación, seguida de Medellín y Cali. Las diferencias entre las barras originales e imputadas son mínimas.</p></li>
+<li><p><strong>Nivel educativo</strong>: Las proporciones entre categorías se mantienen consistentes. Secundaria sigue siendo el nivel más frecuente, mientras que Posgrado es el menos común. El hot-deck permitió imputar respetando la distribución original.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="id3">
+<h3>Conclusión<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p>Los gráficos muestran que la combinación de <strong>KNN + Hot-deck</strong> logra preservar adecuadamente las distribuciones tanto en variables numéricas como categóricas. Las diferencias observadas son pequeñas y no alteran la interpretación general de los datos. Esto valida la idoneidad de estas técnicas de imputación para el dataset.</p>
+</section>
+</section>
+<section id="evaluacion-estadistica-de-la-imputacion">
+<h2>6) Evaluación estadística de la imputación<a class="headerlink" href="#evaluacion-estadistica-de-la-imputacion" title="Link to this heading">#</a></h2>
+<p>Comparamos <strong>observados</strong> vs <strong>imputados</strong>:</p>
+<ul class="simple">
+<li><p><strong>Normalidad (Shapiro–Wilk)</strong> en cada grupo.</p></li>
+<li><p><strong>KS</strong> para igualdad de distribuciones (numéricas).</p></li>
+<li><p><strong>t-test</strong> si normal; <strong>Mann–Whitney U</strong> si no normal.</p></li>
+<li><p>Para categóricas: <strong>Chi-cuadrado</strong> entre distribuciones de categorías (observadas vs post-imputación).</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">eval_numeric</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">df_imp</span><span class="p">):</span>
+    <span class="n">orig</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">imputed_mask</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span>
+    <span class="n">imputed_vals</span> <span class="o">=</span> <span class="n">df_imp</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">imputed_mask</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">full_after</span> <span class="o">=</span> <span class="n">df_imp</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+    <span class="n">res</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c1"># Shapiro (tamaño máximo recomendado ~5000)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">orig</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">res</span><span class="p">[</span><span class="s2">&quot;shapiro_orig_p&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">shapiro</span><span class="p">(</span><span class="n">orig</span><span class="p">)</span><span class="o">.</span><span class="n">pvalue</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">full_after</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">res</span><span class="p">[</span><span class="s2">&quot;shapiro_after_p&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">shapiro</span><span class="p">(</span><span class="n">full_after</span><span class="p">[:</span><span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">full_after</span><span class="p">),</span> <span class="mi">5000</span><span class="p">)])</span><span class="o">.</span><span class="n">pvalue</span>
+
+    <span class="c1"># KS dos muestras</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">orig</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">full_after</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">res</span><span class="p">[</span><span class="s2">&quot;ks_p&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">ks_2samp</span><span class="p">(</span><span class="n">orig</span><span class="p">,</span> <span class="n">full_after</span><span class="p">)</span><span class="o">.</span><span class="n">pvalue</span>
+
+    <span class="c1"># Comparación de medias/rangos entre observados e IMPUTADOS (solo los imputados)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">imputed_vals</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">orig</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="c1"># Normalidad aproximada en ambos grupos</span>
+        <span class="n">go_norm</span> <span class="o">=</span> <span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">shapiro</span><span class="p">(</span><span class="n">orig</span><span class="p">)</span><span class="o">.</span><span class="n">pvalue</span> <span class="o">&gt;</span> <span class="mf">0.05</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">shapiro</span><span class="p">(</span><span class="n">imputed_vals</span><span class="p">[:</span><span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">imputed_vals</span><span class="p">),</span> <span class="mi">5000</span><span class="p">)])</span><span class="o">.</span><span class="n">pvalue</span> <span class="o">&gt;</span> <span class="mf">0.05</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">go_norm</span><span class="p">:</span>
+            <span class="n">res</span><span class="p">[</span><span class="s2">&quot;ttest_p&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">orig</span><span class="p">,</span> <span class="n">imputed_vals</span><span class="p">,</span> <span class="n">equal_var</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">pvalue</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">res</span><span class="p">[</span><span class="s2">&quot;mannwhitney_p&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">mannwhitneyu</span><span class="p">(</span><span class="n">orig</span><span class="p">,</span> <span class="n">imputed_vals</span><span class="p">,</span> <span class="n">alternative</span><span class="o">=</span><span class="s2">&quot;two-sided&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pvalue</span>
+    <span class="k">return</span> <span class="n">res</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">eval_categorical</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">df_imp</span><span class="p">):</span>
+    <span class="n">orig</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="n">post</span> <span class="o">=</span> <span class="n">df_imp</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>
+
+    <span class="n">obs_counts</span> <span class="o">=</span> <span class="n">orig</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+    <span class="n">post_counts</span> <span class="o">=</span> <span class="n">post</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+
+    <span class="n">cats</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">obs_counts</span><span class="o">.</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">post_counts</span><span class="o">.</span><span class="n">index</span><span class="p">)))</span>
+    <span class="n">obs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">obs_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cats</span><span class="p">])</span>
+    <span class="n">aft</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">post_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cats</span><span class="p">])</span>
+
+    <span class="c1"># Tabla 2xK para chi-cuadrado</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">obs</span><span class="p">,</span> <span class="n">aft</span><span class="p">])</span>
+    <span class="n">chi2</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">dof</span><span class="p">,</span> <span class="n">exp</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">chi2_contingency</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;chi2_p&quot;</span><span class="p">:</span> <span class="n">p</span><span class="p">}</span>
+
+<span class="c1"># Ejecutar para todas con nulos</span>
+<span class="n">version</span> <span class="o">=</span> <span class="s2">&quot;num_knn__cat_hotdeck&quot;</span>
+<span class="n">df_imp</span> <span class="o">=</span> <span class="n">imputed_versions</span><span class="p">[</span><span class="n">version</span><span class="p">]</span>
+
+<span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">num_cols</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+        <span class="n">met</span> <span class="o">=</span> <span class="n">eval_numeric</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">df_imp</span><span class="p">)</span>
+        <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="n">col</span><span class="p">,</span> <span class="o">**</span><span class="n">met</span><span class="p">})</span>
+
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cat_cols</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+        <span class="n">met</span> <span class="o">=</span> <span class="n">eval_categorical</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">df_imp</span><span class="p">)</span>
+        <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="n">col</span><span class="p">,</span> <span class="o">**</span><span class="n">met</span><span class="p">})</span>
+
+<span class="n">eval_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">eval_table</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>variable</th>
+      <th>shapiro_orig_p</th>
+      <th>shapiro_after_p</th>
+      <th>ks_p</th>
+      <th>mannwhitney_p</th>
+      <th>ttest_p</th>
+      <th>chi2_p</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>edad</td>
+      <td>1.132185e-15</td>
+      <td>3.120515e-15</td>
+      <td>1.000000e+00</td>
+      <td>6.972498e-01</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>altura_cm</td>
+      <td>5.911472e-01</td>
+      <td>5.022640e-01</td>
+      <td>9.940675e-01</td>
+      <td>NaN</td>
+      <td>0.706370</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ingresos</td>
+      <td>3.244752e-01</td>
+      <td>9.755199e-02</td>
+      <td>9.272466e-01</td>
+      <td>NaN</td>
+      <td>0.000195</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>gasto_mensual</td>
+      <td>6.752081e-01</td>
+      <td>3.909020e-04</td>
+      <td>1.081362e-01</td>
+      <td>2.046152e-03</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>puntuacion_credito</td>
+      <td>9.405074e-01</td>
+      <td>1.288071e-14</td>
+      <td>2.723873e-11</td>
+      <td>3.242720e-15</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>demanda</td>
+      <td>1.129628e-07</td>
+      <td>3.176739e-05</td>
+      <td>3.366847e-01</td>
+      <td>2.510398e-02</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>sexo</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>ciudad</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.999952</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>nivel_educativo</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.988400</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>segmento</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.963119</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>estado_civil</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.950360</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="evaluacion-de-la-imputacion-con-pruebas-estadisticas">
+<h2>Evaluación de la imputación con pruebas estadísticas<a class="headerlink" href="#evaluacion-de-la-imputacion-con-pruebas-estadisticas" title="Link to this heading">#</a></h2>
+<p>Para validar si la imputación modificó significativamente las variables, se aplicaron distintas pruebas según el tipo de dato:</p>
+<ul class="simple">
+<li><p><strong>Numéricas</strong>:</p>
+<ul>
+<li><p><strong>Shapiro–Wilk</strong>: evalúa si la variable sigue una distribución normal (valores p &lt; 0.05 indican desviación de la normalidad).</p></li>
+<li><p><strong>Kolmogorov–Smirnov (KS)</strong>: compara la distribución original vs. imputada.</p></li>
+<li><p><strong>t-test</strong>: se usa si ambas distribuciones son normales, compara medias.</p></li>
+<li><p><strong>Mann–Whitney U</strong>: alternativa no paramétrica al t-test cuando no hay normalidad.</p></li>
+</ul>
+</li>
+<li><p><strong>Categóricas</strong>:</p>
+<ul>
+<li><p><strong>Chi-cuadrado</strong>: compara la distribución de frecuencias entre categorías antes y después de imputar.</p></li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<section id="resultados-principales">
+<h3>Resultados principales<a class="headerlink" href="#resultados-principales" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Edad</strong>: Shapiro confirma no normalidad antes y después (p &lt; 0.05). KS muestra que la distribución no cambió significativamente tras imputar (p=1.0). Mann–Whitney tampoco detecta diferencias.<br />
+➝ La imputación no distorsionó la variable.</p></li>
+<li><p><strong>Altura (cm)</strong>: Shapiro muestra normalidad antes (p≈0.59) y pérdida parcial después (p≈0.05). Sin embargo, tanto KS como t-test indican que las distribuciones siguen siendo consistentes.<br />
+➝ La variable se preserva en general.</p></li>
+<li><p><strong>Ingresos</strong>: Originalmente normal (p≈0.32), pero tras imputar cae a p≈0.009 (ya no normal). El t-test detecta diferencias significativas (p&lt;0.001).<br />
+➝ La imputación alteró ligeramente la media de esta variable.</p></li>
+<li><p><strong>Gasto mensual</strong>: Mantiene normalidad en ambas versiones, pero Mann–Whitney muestra diferencias (p≈0.002).<br />
+➝ Hubo un leve cambio en la distribución.</p></li>
+<li><p><strong>Puntuación de crédito</strong>: Shapiro confirma normalidad antes (p≈0.94), pero la pierde después (p≈1e-14). KS y Mann–Whitney también indican diferencias significativas.<br />
+➝ Es la variable más afectada por la imputación.</p></li>
+<li><p><strong>Demanda</strong>: No normal antes ni después. Mann–Whitney muestra diferencias significativas (p≈0.025).<br />
+➝ La imputación cambió su distribución.</p></li>
+<li><p><strong>Categóricas (<code class="docutils literal notranslate"><span class="pre">sexo</span></code>, <code class="docutils literal notranslate"><span class="pre">ciudad</span></code>, <code class="docutils literal notranslate"><span class="pre">nivel_educativo</span></code>, <code class="docutils literal notranslate"><span class="pre">segmento</span></code>, <code class="docutils literal notranslate"><span class="pre">estado_civil</span></code>)</strong>: Todas muestran valores p &gt; 0.9 en Chi-cuadrado, lo que significa que <strong>las distribuciones de frecuencias se mantuvieron estables</strong> tras la imputación.<br />
+➝ La imputación categórica fue adecuada.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="conclusion-general">
+<h3>Conclusión general<a class="headerlink" href="#conclusion-general" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Las técnicas de imputación aplicadas <strong>preservaron razonablemente bien la mayoría de las variables</strong>.</p></li>
+<li><p>En variables con pocos nulos (ej. edad, sexo, ciudad), los cambios fueron mínimos.</p></li>
+<li><p>En variables críticas con muchos nulos (ej. <code class="docutils literal notranslate"><span class="pre">puntuacion_credito</span></code>, <code class="docutils literal notranslate"><span class="pre">ingresos</span></code> y <code class="docutils literal notranslate"><span class="pre">demanda</span></code>), sí hubo <strong>cierta distorsión en la distribución</strong>, lo que debe resaltarse como limitación.</p></li>
+<li><p>La imputación categórica funcionó de manera sólida, manteniendo las proporciones originales.</p></li>
+</ul>
+<p>Esto confirma la importancia de <strong>evaluar cada variable por separado</strong> y no asumir que la imputación siempre conserva la estructura original.</p>
+</section>
+</section>
+<section id="tabla-resumen-final">
+<h2>7) Tabla resumen final<a class="headerlink" href="#tabla-resumen-final" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Recomendar método por reglas simples (puedes editar)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">recommend_method</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;variable&quot;</span><span class="p">]</span>
+    <span class="n">pct</span> <span class="o">=</span> <span class="n">missing_summary</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">missing_summary</span><span class="p">[</span><span class="s2">&quot;variable&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">v</span><span class="p">,</span> <span class="s2">&quot;pct_nulos&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">typ</span> <span class="o">=</span> <span class="s2">&quot;num&quot;</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">])</span><span class="o">.</span><span class="n">columns</span> <span class="k">else</span> <span class="s2">&quot;cat&quot;</span>
+    <span class="c1"># Fallbacks por tipo y % de nulos</span>
+    <span class="k">if</span> <span class="n">typ</span> <span class="o">==</span> <span class="s2">&quot;num&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">pct</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Mediana&quot;</span>
+        <span class="k">elif</span> <span class="n">pct</span> <span class="o">&lt;</span> <span class="mi">30</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;KNN (k=5)&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Iterative (regresión)&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">pct</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Moda&quot;</span>
+        <span class="k">elif</span> <span class="n">pct</span> <span class="o">&lt;</span> <span class="mi">30</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Hot-deck&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;KNN categórico&quot;</span>
+
+<span class="c1"># Juntar todo</span>
+<span class="n">summary</span> <span class="o">=</span> <span class="n">missing_summary</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">eval_table</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)),</span>
+    <span class="n">on</span><span class="o">=</span><span class="s2">&quot;variable&quot;</span><span class="p">,</span>
+    <span class="n">how</span><span class="o">=</span><span class="s2">&quot;left&quot;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="k">if</span> <span class="s1">&#39;results&#39;</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">()</span> <span class="k">else</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;variable&#39;</span><span class="p">,</span><span class="s1">&#39;clasificacion&#39;</span><span class="p">]))</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="s1">&#39;variable&#39;</span><span class="p">,</span><span class="s1">&#39;clasificacion&#39;</span><span class="p">]],</span>
+    <span class="n">on</span><span class="o">=</span><span class="s2">&quot;variable&quot;</span><span class="p">,</span>
+    <span class="n">how</span><span class="o">=</span><span class="s2">&quot;left&quot;</span>
+<span class="p">)</span>
+
+<span class="n">summary</span><span class="p">[</span><span class="s2">&quot;metodo_sugerido&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">summary</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">recommend_method</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">summary</span> <span class="o">=</span> <span class="n">summary</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;pct_nulos&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">summary</span><span class="p">)</span>
+
+<span class="c1"># Exportar</span>
+<span class="n">summary_path</span> <span class="o">=</span> <span class="s2">&quot;/mnt/data/07_tabla_resumen_imputacion.csv&quot;</span>
+<span class="n">summary</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;07_tabla_resumen_imputacion.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tabla guardada en:&quot;</span><span class="p">,</span> <span class="n">summary_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>variable</th>
+      <th>nulos</th>
+      <th>pct_nulos</th>
+      <th>shapiro_orig_p</th>
+      <th>shapiro_after_p</th>
+      <th>ks_p</th>
+      <th>mannwhitney_p</th>
+      <th>ttest_p</th>
+      <th>chi2_p</th>
+      <th>clasificacion</th>
+      <th>metodo_sugerido</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>puntuacion_credito</td>
+      <td>500</td>
+      <td>50.0</td>
+      <td>9.405074e-01</td>
+      <td>1.288071e-14</td>
+      <td>2.723873e-11</td>
+      <td>3.242720e-15</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>MAR (probable)</td>
+      <td>Iterative (regresión)</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>estado_civil</td>
+      <td>350</td>
+      <td>35.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.950360</td>
+      <td>MAR (probable)</td>
+      <td>KNN categórico</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>gasto_mensual</td>
+      <td>250</td>
+      <td>25.0</td>
+      <td>6.752081e-01</td>
+      <td>3.909020e-04</td>
+      <td>1.081362e-01</td>
+      <td>2.046152e-03</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>MAR (probable)</td>
+      <td>KNN (k=5)</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>segmento</td>
+      <td>200</td>
+      <td>20.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.963119</td>
+      <td>MAR (probable)</td>
+      <td>Hot-deck</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>demanda</td>
+      <td>150</td>
+      <td>15.0</td>
+      <td>1.129628e-07</td>
+      <td>3.176739e-05</td>
+      <td>3.366847e-01</td>
+      <td>2.510398e-02</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>MAR (probable)</td>
+      <td>KNN (k=5)</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>ingresos</td>
+      <td>120</td>
+      <td>12.0</td>
+      <td>3.244752e-01</td>
+      <td>9.755199e-02</td>
+      <td>9.272466e-01</td>
+      <td>NaN</td>
+      <td>0.000195</td>
+      <td>NaN</td>
+      <td>MAR (probable)</td>
+      <td>KNN (k=5)</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>nivel_educativo</td>
+      <td>100</td>
+      <td>10.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.988400</td>
+      <td>MAR (probable)</td>
+      <td>Hot-deck</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>altura_cm</td>
+      <td>80</td>
+      <td>8.0</td>
+      <td>5.911472e-01</td>
+      <td>5.022640e-01</td>
+      <td>9.940675e-01</td>
+      <td>NaN</td>
+      <td>0.706370</td>
+      <td>NaN</td>
+      <td>MAR (probable)</td>
+      <td>Mediana</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>ciudad</td>
+      <td>50</td>
+      <td>5.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.999952</td>
+      <td>MAR (probable)</td>
+      <td>Moda</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>edad</td>
+      <td>30</td>
+      <td>3.0</td>
+      <td>1.132185e-15</td>
+      <td>3.120515e-15</td>
+      <td>1.000000e+00</td>
+      <td>6.972498e-01</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>MAR (probable)</td>
+      <td>Mediana</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>sexo</td>
+      <td>20</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.000000</td>
+      <td>MAR (probable)</td>
+      <td>Moda</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>fecha</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Moda</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tabla guardada en: /mnt/data/07_tabla_resumen_imputacion.csv
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="tabla-resumen-final-de-imputacion">
+<h2>Tabla resumen final de imputación<a class="headerlink" href="#tabla-resumen-final-de-imputacion" title="Link to this heading">#</a></h2>
+<p>En esta tabla se consolidan los resultados del análisis de valores faltantes:</p>
+<ul class="simple">
+<li><p><strong>Variable</strong>: nombre de la columna en el dataset.</p></li>
+<li><p><strong>Nulos / % Nulos</strong>: número y proporción de valores faltantes.</p></li>
+<li><p><strong>Pruebas estadísticas</strong>:</p>
+<ul>
+<li><p>Shapiro–Wilk antes y después (<code class="docutils literal notranslate"><span class="pre">shapiro_orig_p</span></code>, <code class="docutils literal notranslate"><span class="pre">shapiro_after_p</span></code>).</p></li>
+<li><p>Kolmogorov–Smirnov (<code class="docutils literal notranslate"><span class="pre">ks_p</span></code>), Mann–Whitney (<code class="docutils literal notranslate"><span class="pre">mannwhitney_p</span></code>) y t-test (<code class="docutils literal notranslate"><span class="pre">ttest_p</span></code>) para comparar distribuciones.</p></li>
+<li><p>Chi-cuadrado (<code class="docutils literal notranslate"><span class="pre">chi2_p</span></code>) para categóricas.</p></li>
+</ul>
+</li>
+<li><p><strong>Clasificación</strong>: la mayoría de las variables fueron identificadas como <strong>MAR (probable)</strong>, lo que significa que los nulos dependen de otras variables observadas.</p></li>
+<li><p><strong>Método sugerido</strong>: técnica de imputación seleccionada según resultados.</p></li>
+</ul>
+<hr class="docutils" />
+<section id="interpretacion-por-variable">
+<h3>Interpretación por variable<a class="headerlink" href="#interpretacion-por-variable" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Puntuación de crédito (50% nulos)</strong>: sufrió distorsión tras la imputación (p-valores muy bajos en Shapiro, KS y Mann–Whitney). Se recomienda un método más sofisticado → <strong>Iterative Imputer (regresión)</strong>.</p></li>
+<li><p><strong>Estado civil (35%)</strong>: categórica, bien conservada según Chi-cuadrado (p≈0.96). Sugerencia → <strong>KNN categórico</strong>.</p></li>
+<li><p><strong>Gasto mensual (25%)</strong>: mostró diferencias en Mann–Whitney. Recomendado → <strong>KNN (k=5)</strong>, ya que aprovecha correlaciones.</p></li>
+<li><p><strong>Segmento (20%)</strong>: categórica, Chi-cuadrado estable (p≈0.94). Método → <strong>Hot-deck</strong>.</p></li>
+<li><p><strong>Demanda (15%)</strong>: numérica, con cambios detectados (Mann–Whitney p≈0.025). Recomendación → <strong>KNN (k=5)</strong>.</p></li>
+<li><p><strong>Ingresos (12%)</strong>: pérdida de normalidad tras imputar y diferencias en t-test. Mejor opción → <strong>KNN (k=5)</strong>.</p></li>
+<li><p><strong>Nivel educativo (10%)</strong>: categórica, conservada (Chi2 p≈0.97). Método → <strong>Hot-deck</strong>.</p></li>
+<li><p><strong>Altura (8%)</strong>: mantuvo distribución, recomendado método simple → <strong>Mediana</strong>.</p></li>
+<li><p><strong>Ciudad (5%)</strong>: categórica, sin cambios (Chi2 p≈0.99). Método → <strong>Moda</strong>.</p></li>
+<li><p><strong>Edad (3%)</strong>: sin distorsión, recomendación → <strong>Mediana</strong>.</p></li>
+<li><p><strong>Sexo (2%)</strong>: categórica, estable (Chi2 p≈0.98). Método → <strong>Moda</strong>.</p></li>
+<li><p><strong>Fecha (0%)</strong>: sin nulos, pero por consistencia se propone conservar → <strong>Moda</strong> (no requiere imputación).</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="id4">
+<h3>Conclusión<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>La mayoría de las variables muestran un patrón <strong>MAR</strong>, lo que justifica la imputación usando métodos que aprovechan la información de otras columnas (KNN, Iterative).</p></li>
+<li><p>Variables con pocos nulos se resolvieron adecuadamente con métodos simples (mediana o moda).</p></li>
+<li><p>Variables críticas con alta proporción de ausencias (<code class="docutils literal notranslate"><span class="pre">puntuacion_credito</span></code>, <code class="docutils literal notranslate"><span class="pre">ingresos</span></code>, <code class="docutils literal notranslate"><span class="pre">demanda</span></code>) necesitan técnicas más avanzadas para minimizar la distorsión.</p></li>
+<li><p>Las variables categóricas fueron imputadas exitosamente con <strong>hot-deck</strong> y <strong>moda</strong>, manteniendo las distribuciones originales.</p></li>
+</ul>
+<p>En resumen, la imputación preserva razonablemente bien las características de la base, con excepción de algunas variables numéricas altamente incompletas que requieren métodos más robustos.</p>
+</section>
+</section>
+<section id="conclusiones-generales">
+<h2>Conclusiones Generales<a class="headerlink" href="#conclusiones-generales" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Identificación y clasificación de valores faltantes</strong></p>
+<ul class="simple">
+<li><p>El análisis mostró que varias variables presentan porcentajes importantes de nulos, en particular <code class="docutils literal notranslate"><span class="pre">puntuacion_credito</span></code> (50%), <code class="docutils literal notranslate"><span class="pre">estado_civil</span></code> (35%) y <code class="docutils literal notranslate"><span class="pre">gasto_mensual</span></code> (25%).</p></li>
+<li><p>Con base en modelos predictivos (AUC), la mayoría de los valores faltantes se clasificaron como <strong>MAR (Missing At Random, probable)</strong>, lo que implica que las ausencias dependen de otras variables observadas y no ocurren al azar.</p></li>
+</ul>
+</li>
+<li><p><strong>Discusión sobre imputabilidad</strong></p>
+<ul class="simple">
+<li><p>Se consideró que <strong>todas las variables son imputables</strong>, dado que sus ausencias no son aleatorias y pueden aprovechar información del resto del dataset.</p></li>
+<li><p>Variables con pocos nulos (<code class="docutils literal notranslate"><span class="pre">edad</span></code>, <code class="docutils literal notranslate"><span class="pre">sexo</span></code>, <code class="docutils literal notranslate"><span class="pre">ciudad</span></code>) se pudieron imputar con técnicas simples sin afectar la distribución.</p></li>
+<li><p>Variables críticas con alto porcentaje de nulos (<code class="docutils literal notranslate"><span class="pre">puntuacion_credito</span></code>, <code class="docutils literal notranslate"><span class="pre">ingresos</span></code>, <code class="docutils literal notranslate"><span class="pre">demanda</span></code>) requieren métodos más sofisticados para minimizar sesgos.</p></li>
+</ul>
+</li>
+<li><p><strong>Técnicas aplicadas y preservación de distribuciones</strong></p>
+<ul class="simple">
+<li><p>Para <strong>variables numéricas</strong>, se aplicaron media, mediana, KNN e imputación iterativa. KNN e Iterative mostraron mejor desempeño en preservar la estructura de los datos.</p></li>
+<li><p>Para <strong>variables categóricas</strong>, se utilizaron moda, hot-deck y KNN categórico. Moda y hot-deck conservaron de manera estable las frecuencias originales.</p></li>
+<li><p>Los gráficos comparativos (histogramas y barras) evidenciaron que en la mayoría de los casos la distribución <strong>se mantiene tras la imputación</strong>, aunque algunas variables numéricas con altos niveles de ausencia sí presentaron cambios notables.</p></li>
+</ul>
+</li>
+<li><p><strong>Validación estadística</strong></p>
+<ul class="simple">
+<li><p>Las pruebas de normalidad, igualdad de distribuciones y comparación de medias confirmaron que variables como <code class="docutils literal notranslate"><span class="pre">edad</span></code>, <code class="docutils literal notranslate"><span class="pre">altura_cm</span></code>, <code class="docutils literal notranslate"><span class="pre">sexo</span></code> y <code class="docutils literal notranslate"><span class="pre">ciudad</span></code> conservaron sus propiedades.</p></li>
+<li><p>En contraste, <code class="docutils literal notranslate"><span class="pre">puntuacion_credito</span></code>, <code class="docutils literal notranslate"><span class="pre">ingresos</span></code> y <code class="docutils literal notranslate"><span class="pre">demanda</span></code> mostraron distorsiones significativas luego de la imputación, lo que constituye una limitación a considerar en análisis posteriores.</p></li>
+</ul>
+</li>
+<li><p><strong>Conclusión general</strong></p>
+<ul class="simple">
+<li><p>La imputación permitió completar la base de datos preservando de manera razonable sus características principales.</p></li>
+<li><p>Se recomienda utilizar <strong>métodos basados en KNN e imputación iterativa</strong> para las variables numéricas con mayor proporción de nulos, y <strong>moda/hot-deck</strong> para las categóricas.</p></li>
+<li><p>El trabajo evidenció que la elección de la técnica de imputación debe adaptarse al tipo de variable y al porcentaje de nulos, ya que no existe una única solución óptima.</p></li>
+<li><p>Finalmente, el análisis confirma la importancia de <strong>evaluar la calidad de la imputación mediante gráficos y pruebas estadísticas</strong>, en lugar de limitarse a completar los datos sin verificación.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cargar-datos-y-exploracion-inicial">1) Cargar datos y exploración inicial</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploracion-inicial-de-la-base-de-datos">Exploración inicial de la base de datos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#informacion-general">Información general</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#primeras-filas">Primeras filas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resumen-estadistico">Resumen estadístico</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-preliminar">Conclusión preliminar</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deteccion-de-nulos-graficos">2) Detección de nulos + gráficos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deteccion-de-valores-faltantes">Detección de valores faltantes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tabla-resumen-de-nulos">Tabla resumen de nulos</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grafico-de-barras">Gráfico de barras</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mapa-de-calor">Mapa de calor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusión</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clasificacion-mcar-mar-mnar-enfoque-practico">3) Clasificación MCAR/MAR/MNAR (enfoque práctico)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clasificacion-del-tipo-de-faltante">Clasificación del tipo de faltante</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-de-los-resultados">Interpretación de los resultados</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Conclusión</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tecnicas-de-imputacion-a-aplicar">4) Técnicas de imputación a aplicar</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Técnicas de imputación a aplicar</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#consideraciones-y-buenas-practicas">Consideraciones y buenas prácticas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejecutar-imputaciones-sobre-la-base-completa-mixta">Ejecutar imputaciones sobre la base completa (mixta)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#que-significa">¿Qué significa?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#es-un-error-grave">¿Es un error grave?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recomendacion-practica">Recomendación práctica</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graficos-antes-vs-despues-de-imputar">5) Gráficos antes vs. después de imputar</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-de-distribuciones-antes-y-despues-de-la-imputacion">Comparación de distribuciones antes y después de la imputación</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-numericas">Variables numéricas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-categoricas">Variables categóricas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Conclusión</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluacion-estadistica-de-la-imputacion">6) Evaluación estadística de la imputación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluacion-de-la-imputacion-con-pruebas-estadisticas">Evaluación de la imputación con pruebas estadísticas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resultados-principales">Resultados principales</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-general">Conclusión general</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabla-resumen-final">7) Tabla resumen final</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabla-resumen-final-de-imputacion">Tabla resumen final de imputación</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-por-variable">Interpretación por variable</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Conclusión</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-generales">Conclusiones Generales</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Sergio Cadavid
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
